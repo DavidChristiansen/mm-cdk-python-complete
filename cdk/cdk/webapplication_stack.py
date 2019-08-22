@@ -32,17 +32,6 @@ class WebApplicationStack(core.Stack):
         
         bucket.grant_read(identity)
 
-        contentDir = os.path.realpath("./web")
-
-        deployment.BucketDeployment(
-            self,
-            "DeployWebsite",
-            source=deployment.Source.asset(contentDir),
-            destination_key_prefix="web/",
-            destination_bucket=bucket,
-            retain_on_delete=False,
-        )
-
         cloudfront_distribution = cloudfront.CloudFrontWebDistribution(
             self,
             "CloudFront",
@@ -62,6 +51,18 @@ class WebApplicationStack(core.Stack):
                     },
                 }
             ],
+        )
+
+        contentDir = os.path.realpath("../web/")
+        source = deployment.Source.asset(contentDir)
+        deployment.BucketDeployment(
+            self,
+            "DeployWebsite",
+            source=source,
+            destination_key_prefix="web/",
+            destination_bucket=bucket,
+            distribution=cloudfront_distribution,
+            retain_on_delete=False,
         )
 
         core.CfnOutput(self, "CloudFrontURL", description= "The CloudFront distribution URL" ,value=cloudfront_distribution.domain_name)
