@@ -23,7 +23,8 @@ setuptools.setup(
         "aws-cdk.aws-s3",
         "aws-cdk.aws-iam",
         "aws-cdk.aws-cloudfront",
-        "aws_cdk.aws_s3_deployment"
+        "aws_cdk.aws_s3_deployment",
+        "aws_cdk.aws-codecommit"
     ],
 
     python_requires=">=3.6",
