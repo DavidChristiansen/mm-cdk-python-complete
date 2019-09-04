@@ -8,7 +8,7 @@ from cdk.webapplication_stack import WebApplicationStack
 
 app = core.App()
 
-developerToolStack = DeveloperStack(app, 'MythicalMysfits-DeveloperTools')
+developerToolStack = DeveloperStack(app, "MythicalMysfits-DeveloperTools")
 WebApplicationStack(app, "MythicalMysfits-WebApplication")
 
 app.synth()
