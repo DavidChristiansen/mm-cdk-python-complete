@@ -3,33 +3,27 @@ from aws_cdk import (
     aws_cloudfront as cloudfront,
     aws_iam as iam,
     aws_s3_deployment as deployment,
-    core
+    core,
 )
 import os
 
-class WebApplicationStack(core.Stack):
 
+class WebApplicationStack(core.Stack):
     def __init__(self, scope: core.Construct, id: str, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
 
-        bucket = s3.Bucket(
-            self,
-            "Bucket",
-            website_index_document='index.html'
-        )
+        bucket = s3.Bucket(self, "Bucket", website_index_document="index.html")
 
-        config = {
-            "comment": "mythical-mysfits"
-        }
+        config = {"comment": "mythical-mysfits"}
 
         origin = cloudfront.CfnCloudFrontOriginAccessIdentity(
-            self,
-            "BucketOrigin",
-            cloud_front_origin_access_identity_config=config
+            self, "BucketOrigin", cloud_front_origin_access_identity_config=config
         )
 
-        identity = iam.CanonicalUserPrincipal(canonical_user_id=origin.attr_s3_canonical_user_id)
-        
+        identity = iam.CanonicalUserPrincipal(
+            canonical_user_id=origin.attr_s3_canonical_user_id
+        )
+
         bucket.grant_read(identity)
 
         cloudfront_distribution = cloudfront.CloudFrontWebDistribution(
@@ -39,11 +33,13 @@ class WebApplicationStack(core.Stack):
             price_class=cloudfront.PriceClass.PRICE_CLASS_ALL,
             origin_configs=[
                 {
-                    "behaviors": [{
-                        "isDefaultBehavior": True, 
-                        "max_ttl_seconds": None,
-                        "allowedMethods": cloudfront.CloudFrontAllowedMethods.GET_HEAD_OPTIONS
-                    }],
+                    "behaviors": [
+                        {
+                            "isDefaultBehavior": True,
+                            "max_ttl_seconds": None,
+                            "allowedMethods": cloudfront.CloudFrontAllowedMethods.GET_HEAD_OPTIONS,
+                        }
+                    ],
                     "originPath": "/web",
                     "s3OriginSource": {
                         "s3BucketSource": bucket,
@@ -65,4 +61,9 @@ class WebApplicationStack(core.Stack):
             retain_on_delete=False,
         )
 
-        core.CfnOutput(self, "CloudFrontURL", description= "The CloudFront distribution URL" ,value=cloudfront_distribution.domain_name)
+        core.CfnOutput(
+            self,
+            "CloudFrontURL",
+            description="The CloudFront distribution URL",
+            value=cloudfront_distribution.domain_name,
+        )
