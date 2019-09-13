@@ -10,7 +10,10 @@ CORS(app)
 # sent to the service root will receive a healthy response.
 @app.route("/")
 def healthCheckResponse():
-    return jsonify({"message" : "Nothing here, used for health check. Try /mysfits instead."})
+    return jsonify(
+        {"message": "Nothing here, used for health check. Try /mysfits instead."}
+    )
+
 
 # The main API resource that the next version of the Mythical Mysfits website
 # will utilize. It returns the data for all of the Mysfits to be displayed on
@@ -26,9 +29,10 @@ def getMysfits():
     # set the Content-Type header so that the browser is aware that the response
     # is formatted as JSON and our frontend JavaScript code is able to
     # appropriately parse the response.
-    response.headers["Content-Type"]= "application/json"
+    response.headers["Content-Type"] = "application/json"
 
     return response
+
 
 # Run the service on the local server it has been deployed to,
 # listening on port 8080.
