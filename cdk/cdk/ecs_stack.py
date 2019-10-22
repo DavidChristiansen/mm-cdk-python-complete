@@ -26,12 +26,15 @@ class EcsStack(core.Stack):
         )
         self._ecs_cluster.connections.allow_from_any_ipv4(aws_ec2.Port.tcp(8080))
 
+        task_image_options = aws_ecs_patterns.NetworkLoadBalancedTaskImageOptions(
+            container_port=8080,
+            image=aws_ecs.ContainerImage.from_ecr_repository(props.ecr_repository),
+        )
         self._ecs_service = aws_ecs_patterns.NetworkLoadBalancedFargateService(
             self,
             "Service",
             cluster=self._ecs_cluster,
-            container_port=8080,
-            image=aws_ecs.ContainerImage.from_ecr_repository(props.ecr_repository),
+            task_image_options=task_image_options,
         )
         self._ecs_service.service.connections.allow_from(
             aws_ec2.Peer.ipv4(props.vpc.vpc_cidr_block), aws_ec2.Port.tcp(8080)
@@ -79,5 +82,7 @@ class EcsStack(core.Stack):
             "logs:PutLogEvents",
         )
         task_role_policy.add_all_resources()
-        self._ecs_service.service.task_definition.add_to_task_role_policy(task_definition_policy)
+        self._ecs_service.service.task_definition.add_to_task_role_policy(
+            task_definition_policy
+        )
 

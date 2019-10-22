@@ -52,7 +52,7 @@ class WebApplicationStack(core.Stack):
         deployment.BucketDeployment(
             self,
             "DeployWebsite",
-            source=source,
+            sources=[source],
             destination_key_prefix="web/",
             destination_bucket=bucket,
             distribution=cloudfront_distribution,
