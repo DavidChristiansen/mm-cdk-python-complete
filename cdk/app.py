@@ -9,6 +9,7 @@ from cdk.ecr_stack import EcrStack
 from cdk.ecs_stack import EcsStack, EcsStackProps
 from cdk.cicd_stack import CiCdStack, CiCdStackProps
 from cdk.dynamodb_stack import DynamoDbStack, DynamoDbStackProps
+from cdk.apigateway_stack import APIGatewayStack, APIGatewayStackProps
 
 app = core.App()
 
@@ -38,5 +39,10 @@ dynamodb_stack = DynamoDbStack(
     app, "MythicalMysfits-DynamoDbStack", dynamodb_stack_props
 )
 
+apigateway_stack_props = APIGatewayStackProps()
+apigateway_stack_props.fargate_service = ecs_stack.ecs_service
+apigateway_stack = APIGatewayStack(
+    app, "MythicalMysfits-ApiGatewayStack", apigateway_stack_props
+)
 
 app.synth()
