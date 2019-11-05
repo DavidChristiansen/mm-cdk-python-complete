@@ -41,10 +41,9 @@ class WebApplicationStack(core.Stack):
                         }
                     ],
                     "originPath": "/web",
-                    "s3OriginSource": {
-                        "s3BucketSource": bucket,
-                        "originAccessIdentity": origin.attr_s3_canonical_user_id,
-                    },
+                    "s3OriginSource": cloudfront.S3OriginConfig(
+                        s3_bucket_source=bucket, origin_access_identity_id=origin.ref
+                    ),
                 }
             ],
         )
@@ -65,5 +64,5 @@ class WebApplicationStack(core.Stack):
             self,
             "CloudFrontURL",
             description="The CloudFront distribution URL",
-            value=cloudfront_distribution.domain_name,
+            value="https://{}".format(cloudfront_distribution.domain_name),
         )
