@@ -2,7 +2,7 @@
 
 set -e
 
-pool_id=$(aws cognito-idp list-user-pools --query 'UserPools[?Name==`MysfitsUserPool`].Id' --max-results 5 --output json )
+pool_id=$(aws cognito-idp list-user-pools --query 'UserPools[?Name==`MysfitsUserPool`].Id' --max-results 1 --output text )
 
 if [[ -z $pool_id ]]; then
 	echo Creating pool...
