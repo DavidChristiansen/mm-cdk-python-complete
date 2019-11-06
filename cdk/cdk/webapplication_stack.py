@@ -26,25 +26,24 @@ class WebApplicationStack(core.Stack):
 
         bucket.grant_read(identity)
 
+        cloudfront_behaviour = cloudfront.Behavior(
+            max_ttl=core.Duration.seconds(60),
+            allowed_methods=cloudfront.CloudFrontAllowedMethods.GET_HEAD_OPTIONS,
+            is_default_behavior=True
+        )
         cloudfront_distribution = cloudfront.CloudFrontWebDistribution(
             self,
             "CloudFront",
-            viewer_protocol_policy=cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+            viewer_protocol_policy=cloudfront.ViewerProtocolPolicy.ALLOW_ALL,
             price_class=cloudfront.PriceClass.PRICE_CLASS_ALL,
             origin_configs=[
-                {
-                    "behaviors": [
-                        {
-                            "isDefaultBehavior": True,
-                            "max_ttl_seconds": None,
-                            "allowedMethods": cloudfront.CloudFrontAllowedMethods.GET_HEAD_OPTIONS,
-                        }
-                    ],
-                    "originPath": "/web",
-                    "s3OriginSource": cloudfront.S3OriginConfig(
+                cloudfront.SourceConfiguration(
+                    behaviors=[cloudfront_behaviour],
+                    origin_path="/web",
+                    s3_origin_source=cloudfront.S3OriginConfig(
                         s3_bucket_source=bucket, origin_access_identity_id=origin.ref
                     ),
-                }
+                )
             ],
         )
 
@@ -64,5 +63,5 @@ class WebApplicationStack(core.Stack):
             self,
             "CloudFrontURL",
             description="The CloudFront distribution URL",
-            value="https://{}".format(cloudfront_distribution.domain_name),
+            value="http://{}".format(cloudfront_distribution.domain_name),
         )
