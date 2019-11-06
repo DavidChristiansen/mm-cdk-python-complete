@@ -30,50 +30,50 @@ class DeveloperStack(core.Stack):
             self,
             "CDKRepositoryCloneUrlHttp",
             description="CDK Repository CloneUrl HTTP",
-            value=cdkRepository.repositoryCloneUrlHttp,
+            value=cdkRepository.repository_clone_url_http,
         )
         core.CfnOutput(
             self,
             "CDKRepositoryCloneUrlSsh",
             description="CDK Repository CloneUrl SSH",
-            value=cdkRepository.repositoryCloneUrlSsh,
+            value=cdkRepository.repository_clone_url_ssh,
         )
 
         core.CfnOutput(
             self,
             "WebRepositoryCloneUrlHttp",
             description="Web Repository CloneUrl HTTP",
-            value=webRepository.repositoryCloneUrlHttp,
+            value=webRepository.repository_clone_url_http,
         )
         core.CfnOutput(
             self,
             "WebRepositoryCloneUrlSsh",
             description="Web Repository CloneUrl SSH",
-            value=webRepository.repositoryCloneUrlSsh,
+            value=webRepository.repository_clone_url_http,
         )
 
         core.CfnOutput(
             self,
             "APIRepositoryCloneUrlHttp",
             description="API Repository CloneUrl HTTP",
-            value=apiRepository.repositoryCloneUrlHttp,
+            value=apiRepository.repository_clone_url_http,
         )
         core.CfnOutput(
             self,
             "APIRepositoryCloneUrlSsh",
             description="API Repository CloneUrl SSH",
-            value=apiRepository.repositoryCloneUrlSsh,
+            value=apiRepository.repository_clone_url_ssh,
         )
 
         core.CfnOutput(
             self,
             "LambdaRepositoryCloneUrlHttp",
             description="Lambda Repository CloneUrl HTTP",
-            value=lambdaRepository.repositoryCloneUrlHttp,
+            value=lambdaRepository.repository_clone_url_ssh,
         )
         core.CfnOutput(
             self,
             "LambdaRepositoryCloneUrlSsh",
             description="Lambda Repository CloneUrl SSH",
-            value=lambdaRepository.repositoryCloneUrlSsh,
+            value=lambdaRepository.repository_clone_url_ssh,
         )
