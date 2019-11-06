@@ -50,5 +50,6 @@ class DynamoDbStack(core.Stack):
         for action in ["Scan", "Query", "UpdateItem", "GetItem", "DescribeTable"]:
             fargate_policy.add_actions("dynamodb:{}".format(action))
         fargate_policy.add_resources(table.table_arn)
-        print(props.fargate_service)
+        fargate_policy.add_resources("{}/index/LawChaosIndex".format(table.table_arn))
+        fargate_policy.add_resources("{}/index/GoodEvilIndex".format(table.table_arn))
         props.fargate_service.task_definition.add_to_task_role_policy(fargate_policy)
