@@ -6,6 +6,10 @@ from aws_cdk import (
 )
 import os.path
 import json
+from dotenv import load_dotenv
+
+
+load_dotenv()
 
 
 class APIGatewayStackProps(core.StackProps):
@@ -37,7 +41,9 @@ class APIGatewayStack(core.Stack):
             "Schema",
             name="MysfitsApi",
             body=json_schema,
-            endpoint_configuration=aws_apigateway.CfnRestApi.EndpointConfigurationProperty(types=["REGIONAL"]),
+            endpoint_configuration=aws_apigateway.CfnRestApi.EndpointConfigurationProperty(
+                types=["REGIONAL"]
+            ),
             fail_on_warnings=True,
         )
 
@@ -49,9 +55,7 @@ class APIGatewayStack(core.Stack):
 
     @staticmethod
     def _generate_swagger_spec(dns_name: str, vpc_link: aws_apigateway.VpcLink) -> str:
-        userpool_identity = (
-            "eu-west-2_NZMwXpjCA"
-        )  # TODO: replace this with your cognito user pool ID
+        userpool_identity = os.environ["CDK_USERPOOL_IDENTITY"]
         schema_filepath = os.path.realpath(
             os.path.join("..", "api", "api-swagger.json")
         )
