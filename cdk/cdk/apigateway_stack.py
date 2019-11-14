@@ -17,6 +17,10 @@ class APIGatewayStackProps(core.StackProps):
 
 
 class APIGatewayStack(core.Stack):
+    @property
+    def api_gateway(self) -> aws_apigateway.CfnRestApi:
+        return self._api_gateway
+
     def __init__(
         self, scope: core.Construct, id: str, props: APIGatewayStackProps, **kwargs
     ) -> None:
@@ -52,6 +56,7 @@ class APIGatewayStack(core.Stack):
         )
 
         core.CfnOutput(self, "APIID", value=api.ref, description="API Gateway ID")
+        self._api_gateway = api
 
     @staticmethod
     def _generate_swagger_spec(dns_name: str, vpc_link: aws_apigateway.VpcLink) -> str:
