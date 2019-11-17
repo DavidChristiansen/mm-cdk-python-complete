@@ -125,3 +125,7 @@ dmypy.json
 .vscode
 .idea
 cdk.out/
+web/confirm.html
+web/register.html
+js/
+web/index.html
