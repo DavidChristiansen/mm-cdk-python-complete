@@ -8,7 +8,7 @@ from cdk.network_stack import NetworkStack
 from cdk.ecr_stack import EcrStack
 from cdk.ecs_stack import EcsStack, EcsStackProps
 from cdk.cicd_stack import CiCdStack, CiCdStackProps
-
+from cdk.dynamodb_stack import DynamoDbStack, DynamoDbStackProps
 
 app = core.App()
 
@@ -29,5 +29,14 @@ cicd_stack_props.ecr_repository = ecr_stack.ecr_repository
 cicd_stack_props.ecs_service = ecs_stack.ecs_service.service
 
 cicd_stack = CiCdStack(app, "MythicalMysfits-CiCdStack", cicd_stack_props)
+
+dynamodb_stack_props = DynamoDbStackProps()
+print(ecs_stack.ecs_service)
+print(ecs_stack.ecs_service.service)
+dynamodb_stack_props.fargate_service = ecs_stack.ecs_service.service
+dynamodb_stack = DynamoDbStack(
+    app, "MythicalMysfits-DynamoDbStack", dynamodb_stack_props
+)
+
 
 app.synth()

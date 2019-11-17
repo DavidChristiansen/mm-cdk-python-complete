@@ -6,3 +6,6 @@ docker:
 push:
 	$(shell aws ecr get-login --no-include-email)
 	docker push "$(shell aws sts get-caller-identity --output text --query Account ).dkr.ecr.$(AWS_DEFAULT_REGION).amazonaws.com/mythicalmysfits/service:latest"
+
+dynamodb:
+	aws dynamodb batch-write-item --request-items file://data/populate-dynamodb.json
