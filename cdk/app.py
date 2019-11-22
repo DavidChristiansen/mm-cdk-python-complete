@@ -10,6 +10,7 @@ from cdk.ecs_stack import EcsStack, EcsStackProps
 from cdk.cicd_stack import CiCdStack, CiCdStackProps
 from cdk.dynamodb_stack import DynamoDbStack, DynamoDbStackProps
 from cdk.apigateway_stack import APIGatewayStack, APIGatewayStackProps
+from cdk.kinesis_firehose_stack import KinesisFirehoseStack, KinesisFirehoseStackProps
 
 app = core.App()
 
@@ -43,6 +44,13 @@ apigateway_stack_props = APIGatewayStackProps()
 apigateway_stack_props.fargate_service = ecs_stack.ecs_service
 apigateway_stack = APIGatewayStack(
     app, "MythicalMysfits-ApiGatewayStack", apigateway_stack_props
+)
+
+kinesis_firehose_stack_props = KinesisFirehoseStackProps()
+kinesis_firehose_stack_props.table = dynamodb_stack.table
+kinesis_firehose_stack_props.api_gateway = apigateway_stack.api_gateway
+kinesis_firehose_stack = KinesisFirehoseStack(
+    app, "MythicalMysfits-KinesisFirehoseStack", kinesis_firehose_stack_props
 )
 
 app.synth()

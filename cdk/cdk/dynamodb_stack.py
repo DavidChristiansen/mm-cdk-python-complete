@@ -6,6 +6,10 @@ class DynamoDbStackProps(core.StackProps):
 
 
 class DynamoDbStack(core.Stack):
+    @property
+    def table(self) -> aws_dynamodb.Table:
+        return self._table
+
     def __init__(
         self, scope: core.Construct, id: str, props: DynamoDbStackProps, **kwargs
     ) -> None:
@@ -53,3 +57,4 @@ class DynamoDbStack(core.Stack):
         fargate_policy.add_resources("{}/index/LawChaosIndex".format(table.table_arn))
         fargate_policy.add_resources("{}/index/GoodEvilIndex".format(table.table_arn))
         props.fargate_service.task_definition.add_to_task_role_policy(fargate_policy)
+        self._table = table
