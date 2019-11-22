@@ -14,5 +14,9 @@ aws_cdk.aws_dynamodb==1.16.3
 aws-cdk.core==1.16.3
 aws-cdk.custom-resources==1.16.3
 aws-cdk.aws_apigateway==1.16.3
+aws-cdk-aws-kinesis==1.16.3
 aws-cdk.aws_kinesisfirehose==1.16.3
+aws-cdk.aws_sns==1.16.3
+aws-cdk.aws_sns_subscriptions==1.16.3
+aws-cdk.aws_lambda_event_sources==1.16.3
 python-dotenv

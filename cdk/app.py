@@ -11,6 +11,7 @@ from cdk.cicd_stack import CiCdStack, CiCdStackProps
 from cdk.dynamodb_stack import DynamoDbStack, DynamoDbStackProps
 from cdk.apigateway_stack import APIGatewayStack, APIGatewayStackProps
 from cdk.kinesis_firehose_stack import KinesisFirehoseStack, KinesisFirehoseStackProps
+from cdk.xray_stack import XRayStack
 
 app = core.App()
 
@@ -52,5 +53,7 @@ kinesis_firehose_stack_props.api_gateway = apigateway_stack.api_gateway
 kinesis_firehose_stack = KinesisFirehoseStack(
     app, "MythicalMysfits-KinesisFirehoseStack", kinesis_firehose_stack_props
 )
+
+xray_stack = XRayStack(app, "MythicalMysfits-XRayStack")
 
 app.synth()
