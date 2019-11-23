@@ -35,8 +35,6 @@ cicd_stack_props.ecs_service = ecs_stack.ecs_service.service
 cicd_stack = CiCdStack(app, "MythicalMysfits-CiCdStack", cicd_stack_props)
 
 dynamodb_stack_props = DynamoDbStackProps()
-print(ecs_stack.ecs_service)
-print(ecs_stack.ecs_service.service)
 dynamodb_stack_props.fargate_service = ecs_stack.ecs_service.service
 dynamodb_stack = DynamoDbStack(
     app, "MythicalMysfits-DynamoDbStack", dynamodb_stack_props
