@@ -12,6 +12,7 @@ from cdk.dynamodb_stack import DynamoDbStack, DynamoDbStackProps
 from cdk.apigateway_stack import APIGatewayStack, APIGatewayStackProps
 from cdk.kinesis_firehose_stack import KinesisFirehoseStack, KinesisFirehoseStackProps
 from cdk.xray_stack import XRayStack
+from cdk.sagemaker_stack import SagemakerStack
 
 app = core.App()
 
@@ -55,5 +56,7 @@ kinesis_firehose_stack = KinesisFirehoseStack(
 )
 
 xray_stack = XRayStack(app, "MythicalMysfits-XRayStack")
+
+sagemaker_stack = SagemakerStack(app, "MythicalMysfits-SageMaker")
 
 app.synth()
