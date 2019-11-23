@@ -4,7 +4,6 @@ from aws_cdk import (
     aws_dynamodb,
     aws_iam,
     aws_lambda,
-    aws_s3,
     aws_lambda_event_sources as event,
     aws_sns,
     aws_sns_subscriptions as subs,
