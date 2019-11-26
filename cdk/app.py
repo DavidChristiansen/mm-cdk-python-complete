@@ -11,6 +11,8 @@ from cdk.cicd_stack import CiCdStack, CiCdStackProps
 from cdk.dynamodb_stack import DynamoDbStack, DynamoDbStackProps
 from cdk.apigateway_stack import APIGatewayStack, APIGatewayStackProps
 from cdk.kinesis_firehose_stack import KinesisFirehoseStack, KinesisFirehoseStackProps
+from cdk.xray_stack import XRayStack
+from cdk.sagemaker_stack import SagemakerStack
 
 app = core.App()
 
@@ -33,8 +35,6 @@ cicd_stack_props.ecs_service = ecs_stack.ecs_service.service
 cicd_stack = CiCdStack(app, "MythicalMysfits-CiCdStack", cicd_stack_props)
 
 dynamodb_stack_props = DynamoDbStackProps()
-print(ecs_stack.ecs_service)
-print(ecs_stack.ecs_service.service)
 dynamodb_stack_props.fargate_service = ecs_stack.ecs_service.service
 dynamodb_stack = DynamoDbStack(
     app, "MythicalMysfits-DynamoDbStack", dynamodb_stack_props
@@ -52,5 +52,9 @@ kinesis_firehose_stack_props.api_gateway = apigateway_stack.api_gateway
 kinesis_firehose_stack = KinesisFirehoseStack(
     app, "MythicalMysfits-KinesisFirehoseStack", kinesis_firehose_stack_props
 )
+
+xray_stack = XRayStack(app, "MythicalMysfits-XRayStack")
+
+sagemaker_stack = SagemakerStack(app, "MythicalMysfits-SageMaker")
 
 app.synth()
